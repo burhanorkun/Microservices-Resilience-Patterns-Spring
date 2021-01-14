@@ -1,0 +1,27 @@
+version: '3.2'
+services:
+  register-service:
+    build: ./registrationservice
+    restart: always
+    tty:
+      true
+    networks:
+      - micro-service-network
+    ports:
+      - 8086:8086
+    container_name: register_app
+  order-service:
+    build: ./ordermanagement
+    restart: always
+    tty:
+      true
+    networks:
+      - micro-service-network
+    ports:
+      - 8085:8085
+    depends_on:
+      - register-service
+    container_name: order_app
+
+networks:
+ micro-service-network:
