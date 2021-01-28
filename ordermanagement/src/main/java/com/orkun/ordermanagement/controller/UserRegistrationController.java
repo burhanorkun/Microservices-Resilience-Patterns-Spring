@@ -25,4 +25,14 @@ public class UserRegistrationController {
     public List<SellerDto> getSellersList() {
         return userRegistrationService.getSellersList();
     }
+
+    @PostMapping("/register/sellerRateLimiter")
+    public String registerAsSellerRateLimitter(@RequestBody SellerDto sellerDto){
+        return userRegistrationService.registerSellerRateLimiter(sellerDto);
+    }
+
+    @PostMapping("/register/sellerRetry")
+    public String registerAsSellerRetry(@RequestBody SellerDto sellerDto){
+        return userRegistrationService.registerSellerRetry(sellerDto);
+    }
 }

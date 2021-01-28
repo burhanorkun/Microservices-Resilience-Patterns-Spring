@@ -24,6 +24,22 @@ public class BulkheadController {
         this.bulkhead = createBulkHead(10);
     }
 
+    private Bulkhead createBulkHead(int maxConcurrent) {
+
+        BulkheadConfig bulkheadConfig = BulkheadConfig.custom()
+                .maxConcurrentCalls(maxConcurrent)
+                .maxWaitDuration(Duration.ofMillis(100))
+                .build();
+
+        Bulkhead bulkhead = Bulkhead.of("registrationService", bulkheadConfig);
+
+        bulkhead.getEventPublisher()
+                .onCallPermitted(event -> log.info("Call permitted"))
+                .onCallRejected(event -> log.info("Call rejected"));
+
+        return bulkhead;
+    }
+
     /*
     $> ab -n 50 -c 15 http://localhost:8085/bulkhead
     Concurrency Level:      15
@@ -53,19 +69,5 @@ public class BulkheadController {
         return "The message was" + restTemplate.getForObject( "/slow", String.class);
     }
 
-    private Bulkhead createBulkHead(int maxConcurrent) {
 
-        BulkheadConfig bulkheadConfig = BulkheadConfig.custom()
-                .maxConcurrentCalls(maxConcurrent)
-                .maxWaitDuration(Duration.ofMillis(100))
-                .build();
-
-        Bulkhead bulkhead = Bulkhead.of("registrationService", bulkheadConfig);
-
-        bulkhead.getEventPublisher()
-                .onCallPermitted(event -> log.info("Call permitted"))
-                .onCallRejected(event -> log.info("Call rejected"));
-
-        return bulkhead;
-    }
 }

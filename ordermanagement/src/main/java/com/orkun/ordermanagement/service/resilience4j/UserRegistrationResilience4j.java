@@ -45,7 +45,7 @@ public class UserRegistrationResilience4j {
         log.error("Inside fallbackForGetSeller, cause - {}", t.toString());
         SellerDto sd = new SellerDto();
         sd.setFirstName("orkun");
-        sd.setId(1111); 
+        sd.setId(1111);
         sd.setEmailId("default");
         List<SellerDto> defaultList = new ArrayList<>();
         defaultList.add(sd);
