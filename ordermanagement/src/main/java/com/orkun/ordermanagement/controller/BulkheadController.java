@@ -16,12 +16,13 @@ import java.util.function.Supplier;
 public class BulkheadController {
 
     private final RestTemplate restTemplate;
-    //private final String providerUri = "http://localhost:8086";
     private final Bulkhead bulkhead;
+
+    private static final int MAX_CONCURRENT = 10;
 
     public BulkheadController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.bulkhead = createBulkHead(10);
+        this.bulkhead = createBulkHead(MAX_CONCURRENT);
     }
 
     private Bulkhead createBulkHead(int maxConcurrent) {
@@ -58,16 +59,15 @@ public class BulkheadController {
 
         if (result.isSuccess()) {
             return result.get();
-        }else{
+        } else {
             return "default-response";
         }
     }
 
 
-    private String registerPayment(){
+    private String registerPayment() {
 
-        return "The message was" + restTemplate.getForObject( "/slow", String.class);
+        return "The message was" + restTemplate.getForObject("/slow", String.class);
     }
-
 
 }

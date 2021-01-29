@@ -35,7 +35,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Override
     public List<SellerDto> getSellersList() {
-        return userRegistrationResilience4j.getSellersList();
+        List<SellerDto> sellerDtoList = userRegistrationResilience4j.getSellersList();
+        log.info("userRegistrationResilience4j call returned count - {}", sellerDtoList.size());
+        return sellerDtoList;
     }
 
     @Override

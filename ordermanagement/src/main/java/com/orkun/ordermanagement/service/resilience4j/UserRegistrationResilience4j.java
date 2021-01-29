@@ -1,14 +1,11 @@
 package com.orkun.ordermanagement.service.resilience4j;
 
 import com.orkun.ordermanagement.dto.SellerDto;
-import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,7 +35,7 @@ public class UserRegistrationResilience4j {
     @CircuitBreaker(name = "service2", fallbackMethod = "fallbackForGetSeller")
     public List<SellerDto> getSellersList() {
         log.info("calling getSellerList()");
-        return restTemplate.getForObject("/registration/sellersList", List.class);
+        return restTemplate.getForObject("/registration/sellerList", List.class);
     }
 
     public List<SellerDto> fallbackForGetSeller(Throwable t) {

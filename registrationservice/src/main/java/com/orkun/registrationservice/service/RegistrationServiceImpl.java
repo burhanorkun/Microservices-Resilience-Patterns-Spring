@@ -42,7 +42,8 @@ public class RegistrationServiceImpl implements RegistrationService{
     public List<SellerDto> getSellersList() {
         List<SellerDto> sellerList = registrationRepository.getSellerList();
 
-        sellerList.add(getDefaultSelletDto());
+        // for test
+        //sellerList.add(getDefaultSelletDto());
 
         log.info("fetching seller list. Total sellers - {}", sellerList.size());
         return sellerList;
